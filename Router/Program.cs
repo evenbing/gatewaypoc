@@ -15,13 +15,13 @@ namespace Router
             const string baseAddress = "http://localhost:9000/";
 
             // Start OWIN host 
-            using (WebApp.Start<Startup>(url: baseAddress))
+            using (WebApp.Start<Startup>(baseAddress))
             {
                 var client = new HttpClient();
                 var routes = new Dictionary<string, string>
                 {
-                    ["template"] = "http://templateservice/",
-                    ["search"] = "http://searchservice/"
+                    ["template"] = "http://vg.no",
+                    ["search"] = "http://google.com"
                 };
 
                 var json = JsonConvert.SerializeObject(routes);
@@ -29,14 +29,21 @@ namespace Router
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response = client.PostAsync(baseAddress + "route", content).Result;
-
-                Console.WriteLine(response);
-                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
-
+                WriteResponse(response);
+                var invalid = client.GetAsync(baseAddress + "invalid").Result;
+                WriteResponse(invalid);
                 var templateResponse = client.GetAsync(baseAddress + "template").Result;
+                WriteResponse(templateResponse);
             }
 
             Console.ReadLine();
+        }
+
+        private static void WriteResponse(HttpResponseMessage response)
+        {
+            Console.WriteLine(response);
+            var result = response.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(result.Substring(0, result.Length > 200 ? 200 : result.Length));
         }
     }
 }

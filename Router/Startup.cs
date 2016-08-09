@@ -7,7 +7,8 @@ namespace Router
 {
     public class Startup
     {
-        public static IDictionary<string, string>  RoutingTable = new Dictionary<string, string>();
+        public static IDictionary<string, string> RoutingTable = new Dictionary<string, string>();
+
         public void Configuration(IAppBuilder appBuilder)
         {
             var config = new HttpConfiguration();
@@ -20,7 +21,7 @@ namespace Router
                         handlers: new DelegatingHandler[] {new RouterHandler()}
                     ),
                 defaults: new {path = RouteParameter.Optional},
-                constraints: new { isRoute = new RouterConstraint()}
+                constraints: null
                 );
 
             appBuilder.UseWebApi(config);

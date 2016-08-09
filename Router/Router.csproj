@@ -78,7 +78,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteController.cs" />
-    <Compile Include="RouterConstraint.cs" />
     <Compile Include="RouterHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

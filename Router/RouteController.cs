@@ -9,6 +9,7 @@ namespace Router
         [HttpPost]
         public IHttpActionResult UpdateRoute([FromBody]IDictionary<string, string> routeTable)
         {
+            // validate routes... Remove trailing slash (https://google.com is ok, http://vg.no/ is not)
             Startup.RoutingTable = routeTable;
             return Ok();
         }
